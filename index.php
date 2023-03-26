@@ -10,6 +10,7 @@ include "./SalaryController.php";
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Calculadora do salário líquido (2023)</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
@@ -28,7 +29,7 @@ include "./SalaryController.php";
               <input type="number" class="form-control" id="numberOfDependents" name="numberOfDependents">
             </div>
 
-            <button type="submit" class="btn btn-primary w-100">Calcular</button>
+            <button type="submit" class="btn btn-primary w-100">Calcular <i class="bi bi-calculator"></i></button>
           </form>
 
           <?php
@@ -68,7 +69,7 @@ include "./SalaryController.php";
                       <span class="text-success">+ R$ <?php echo handleFormatAmount($netSalary) ?></span>
                     </div>
 
-                    <a class="btn btn-outline-primary w-100 mt-3" href="./index.php">Limpar</a>
+                    <a class="btn btn-outline-primary w-100 mt-3" href="./index.php">Limpar <i class="bi bi-trash3"></i></a>
                   </div>
                 </div>
 
