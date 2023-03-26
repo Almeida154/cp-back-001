@@ -1,0 +1,8 @@
+body {
+  background-color: #000;
+}
+
+.content-wrapper {
+  min-height: 100vh;
+  /* max-width: 400px; */
+}
