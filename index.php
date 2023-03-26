@@ -18,36 +18,64 @@ include "./SalaryController.php";
       <div class="d-flex justify-content-center align-items-center content-wrapper">
         <div>
           <form method="post">
-            <div class="mb-3 row">
+            <div class="mb-3">
               <label for="grossSalary" class="form-label p-0">Salário bruto</label>
-              <input type="number" class="form-control" id="grossSalary" name="grossSalary" placeholder="R$ 3.500,00">
+              <input type="number" class="form-control" id="grossSalary" name="grossSalary">
             </div>
 
-            <div class="mb-3 row">
+            <div class="mb-3">
               <label for="numberOfDependents" class="form-label p-0">Número de dependentes</label>
-              <input type="number" class="form-control" id="numberOfDependents" name="numberOfDependents" placeholder="3">
+              <input type="number" class="form-control" id="numberOfDependents" name="numberOfDependents">
             </div>
 
-            <div class="row">
-              <button type="submit" class="btn btn-primary">Calcular</button>
-            </div>
+            <button type="submit" class="btn btn-primary w-100">Calcular</button>
           </form>
 
-          <div class="row">
-            <?php
-              if (isset($_POST['grossSalary']) && isset($_POST['numberOfDependents'])) {
-                $grossSalary = $_POST['grossSalary'];
-                $numberOfDependents = $_POST['numberOfDependents'];
+          <?php
+            function handleFormatAmount($amount) {
+              return number_format($amount, 2, ",", ".");
+            }
 
-                $salaryController = new SalaryController();
+            if (isset($_POST['grossSalary']) && isset($_POST['numberOfDependents'])) {
+              $grossSalary = $_POST['grossSalary'];
+              $numberOfDependents = $_POST['numberOfDependents'];
 
-                [$netSalary, $inss, $irrf] = $salaryController->handleGetNetSalary($grossSalary, $numberOfDependents);
+              $salaryController = new SalaryController();
 
-                echo $netSalary;
-                echo "<a href='./index.php'>Limpar</a>";
-              }
-            ?>
-          </div>
+              [$netSalary, $inss, $irrf] = $salaryController->handleGetNetSalary($grossSalary, $numberOfDependents);
+
+              ?>
+
+                <div>
+                  <div class="result-container mt-5 p-3 rounded">
+                    <div class="row amount">
+                      <h5>Salário bruto (provento)</h5>
+                      <span class="text-success">+ R$ <?php echo handleFormatAmount($grossSalary) ?></span>
+                    </div>
+
+                    <div class="row amount">
+                      <h5>INSS (desconto)</h5>
+                      <span class="text-danger">- R$ <?php echo handleFormatAmount($inss) ?></span>
+                    </div>
+
+                    <div class="row amount">
+                      <h5>IRRF (desconto)</h5>
+                      <span class="text-danger">- R$ <?php echo handleFormatAmount($irrf) ?></span>
+                    </div>
+
+                    <div class="row amount">
+                      <h5>Salário líquido</h5>
+                      <span class="text-success">+ R$ <?php echo handleFormatAmount($netSalary) ?></span>
+                    </div>
+
+                    <a class="btn btn-outline-primary w-100 mt-3" href="./index.php">Limpar</a>
+                  </div>
+                </div>
+
+              <?php
+            }
+          ?>
+
         </div>
       </div>
     </div>

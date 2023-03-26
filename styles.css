@@ -4,5 +4,26 @@ body {
 
 .content-wrapper {
   min-height: 100vh;
-  /* max-width: 400px; */
+}
+
+.content-wrapper > div {
+  width: 400px;
+}
+
+.result-container {
+  background-color: #111111;
+}
+
+.result-container h5 {
+  color: #ffffff7e;
+  font-weight: 400;
+  font-size: 1rem;
+}
+
+.amount {
+  margin-bottom: 1.5rem;
+}
+
+.amount span {
+  font-size: 1.5rem;
 }
