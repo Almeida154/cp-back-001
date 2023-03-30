@@ -28,9 +28,9 @@ include "./SalaryController.php";
               $numberOfDependents = $_POST['numberOfDependents'];
               $discount = $_POST['discount'];
 
-              if (!is_numeric($grossSalary) || !is_numeric($numberOfDependents)) header("Location: ./index.php");
-
+              if (!is_numeric($grossSalary)) header("Location: ./index.php");
               if (!is_numeric($discount)) $discount = 0;
+              if (!is_numeric($numberOfDependents)) $numberOfDependents = 0;
 
               $salaryController = new SalaryController();
 
@@ -72,7 +72,7 @@ include "./SalaryController.php";
               ?>
                 <form method="post">
                   <div class="mb-3">
-                    <label for="grossSalary" class="form-label p-0">Salário bruto</label>
+                    <label for="grossSalary" class="form-label p-0">Salário bruto *</label>
                     <input type="number" class="form-control" id="grossSalary" name="grossSalary">
                   </div>
 
