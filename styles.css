@@ -10,6 +10,10 @@ body {
   width: 400px;
 }
 
+.form-label {
+  color: #FFF
+}
+
 .result-container {
   background-color: #111111;
 }

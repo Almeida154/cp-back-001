@@ -37,17 +37,13 @@ class SalaryController {
     return ($IR2BaseAmount * 0.275) - 869.36;
   }
   
-  public function handleGetNetSalary($grossSalary, $numberOfDependents) {
+  public function handleGetNetSalary($grossSalary, $numberOfDependents, $discount) {
     $inss = round($this->handleCalculateINSS($grossSalary), 2);
     $irrf = round($this->handleCalculateIRRF($grossSalary - $inss, $numberOfDependents), 2);
     
-    $netSalary = $grossSalary - $inss - $irrf;
+    $netSalary = $grossSalary - $inss - $irrf - $discount;
   
     return [$netSalary, $inss, $irrf];
-  }
-
-  public function oi() {
-    return 10;
   }
 }
 

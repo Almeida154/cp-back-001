@@ -18,35 +18,25 @@ include "./SalaryController.php";
     <div class="container">
       <div class="d-flex justify-content-center align-items-center content-wrapper">
         <div>
-          <form method="post">
-            <div class="mb-3">
-              <label for="grossSalary" class="form-label p-0">Salário bruto</label>
-              <input type="number" class="form-control" id="grossSalary" name="grossSalary">
-            </div>
-
-            <div class="mb-3">
-              <label for="numberOfDependents" class="form-label p-0">Número de dependentes</label>
-              <input type="number" class="form-control" id="numberOfDependents" name="numberOfDependents">
-            </div>
-
-            <button type="submit" class="btn btn-primary w-100">Calcular <i class="bi bi-calculator"></i></button>
-          </form>
-
           <?php
             function handleFormatAmount($amount) {
               return number_format($amount, 2, ",", ".");
             }
 
-            if (isset($_POST['grossSalary']) && isset($_POST['numberOfDependents'])) {
+            if (isset($_POST['grossSalary']) && isset($_POST['numberOfDependents']) && isset($_POST['discount'])) {
               $grossSalary = $_POST['grossSalary'];
               $numberOfDependents = $_POST['numberOfDependents'];
+              $discount = $_POST['discount'];
+
+              if (!is_numeric($grossSalary) || !is_numeric($numberOfDependents)) header("Location: ./index.php");
+
+              if (!is_numeric($discount)) $discount = 0;
 
               $salaryController = new SalaryController();
 
-              [$netSalary, $inss, $irrf] = $salaryController->handleGetNetSalary($grossSalary, $numberOfDependents);
+              [$netSalary, $inss, $irrf] = $salaryController->handleGetNetSalary($grossSalary, $numberOfDependents, $discount);
 
               ?>
-
                 <div>
                   <div class="result-container mt-5 p-3 rounded">
                     <div class="row amount">
@@ -65,6 +55,11 @@ include "./SalaryController.php";
                     </div>
 
                     <div class="row amount">
+                      <h5>Convênio odontológico (desconto)</h5>
+                      <span class="text-danger">- R$ <?php echo handleFormatAmount($discount) ?></span>
+                    </div>
+
+                    <div class="row amount">
                       <h5>Salário líquido</h5>
                       <span class="text-success">+ R$ <?php echo handleFormatAmount($netSalary) ?></span>
                     </div>
@@ -72,11 +67,30 @@ include "./SalaryController.php";
                     <a class="btn btn-outline-primary w-100 mt-3" href="./index.php">Limpar <i class="bi bi-trash3"></i></a>
                   </div>
                 </div>
+              <?php
+            } else {
+              ?>
+                <form method="post">
+                  <div class="mb-3">
+                    <label for="grossSalary" class="form-label p-0">Salário bruto</label>
+                    <input type="number" class="form-control" id="grossSalary" name="grossSalary">
+                  </div>
 
+                  <div class="mb-3">
+                    <label for="numberOfDependents" class="form-label p-0">Número de dependentes</label>
+                    <input type="number" class="form-control" id="numberOfDependents" name="numberOfDependents">
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="discount" class="form-label p-0">Convênio odontológico</label>
+                    <input type="number" class="form-control" id="discount" name="discount">
+                  </div>
+
+                  <button type="submit" class="btn btn-primary w-100">Calcular <i class="bi bi-calculator"></i></button>
+                </form>
               <?php
             }
           ?>
-
         </div>
       </div>
     </div>
